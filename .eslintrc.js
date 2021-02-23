@@ -6,7 +6,8 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: ['prettier/@typescript-eslint', 'plugin:prettier/recommended'],
+  extends: ['plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module'
