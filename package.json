@@ -2,9 +2,9 @@
   "name": "retriever",
   "version": "0.0.1",
   "description": "Retriever for anything",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && electron . --enable-logging"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/samlior/retriever/issues"
   },
-  "homepage": "https://github.com/samlior/retriever#readme"
+  "homepage": "https://github.com/samlior/retriever#readme",
+  "dependencies": {
+    "electron": "^11.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  }
 }
