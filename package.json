@@ -1,0 +1,22 @@
+{
+  "name": "retriever",
+  "version": "0.0.1",
+  "description": "Retriever for anything",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samlior/retriever.git"
+  },
+  "keywords": [
+    "retriever"
+  ],
+  "author": "samlior",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samlior/retriever/issues"
+  },
+  "homepage": "https://github.com/samlior/retriever#readme"
+}
