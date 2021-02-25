@@ -32,8 +32,9 @@ app.on('activate', () => {
 
 
 ipcMain.on('api', (event, method: string, ...args: any[]) =>{
+  console.log(args)
   const reply = (data: any) => {
-      event.sender.send(`${method}reply`, data);
+      event.sender.send(`${method}reply`, JSON.stringify(data));
   };
   const success = (params?: any) => reply({ errorCode: 0, params });
   const failed= (params?: any) => reply({ errorCode: 1, params });

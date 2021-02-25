@@ -11,7 +11,13 @@ export class App extends React.Component{
   }
 
   handleTest() {
-    ipc.api('test').then((res) => console.log(res))
+    ipc.api('query', [{ field: 'price', op: 'gte', value: 100 }, { field: 'price', op: 'lte', value: 120 }], 5, 0).then((response) => {
+      if (response.errorCode === 1) {
+        console.log('query failed')
+      } else {
+        console.log('query results:', response.params)
+      }
+    })
   }
 
   render() {

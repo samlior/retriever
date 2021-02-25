@@ -21,7 +21,7 @@ class ipcSevice {
 
     api(method: string, ...args: any[]) {
         this.ipcRenderer.send('api', method, ...args);
-        return new Promise<any>((resolve) => {
+        return new Promise<{ errorCode: 0 | 1, params: any }>((resolve) => {
                 this.ipcRenderer.once(`${method}reply`, (sender: any, response: any) =>{
                 resolve(response)
             })

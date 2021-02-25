@@ -1,0 +1,12 @@
+[
+    {
+        "displayName": "价格",
+        "fieldName": "price",
+        "type": "number"
+    },
+    {
+        "displayName": "名字",
+        "fieldName": "name",
+        "type": "string"
+    }
+]
