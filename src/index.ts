@@ -32,7 +32,6 @@ app.on('activate', () => {
 
 
 ipcMain.on('api', (event, method: string, ...args: any[]) =>{
-  console.log(args)
   const reply = (data: any) => {
       event.sender.send(`${method}reply`, JSON.stringify(data));
   };

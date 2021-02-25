@@ -23,7 +23,14 @@ class ipcSevice {
         this.ipcRenderer.send('api', method, ...args);
         return new Promise<{ errorCode: 0 | 1, params: any }>((resolve) => {
                 this.ipcRenderer.once(`${method}reply`, (sender: any, response: any) =>{
-                resolve(response)
+                try {
+                    resolve(JSON.parse(response))
+                }
+                catch(err) {
+                    console.error('api parse faield!')
+                    electron.dialog.showErrorBox('错误', '内部通信不可恢复错误!');
+                    process.exit(1);
+                }
             })
         })
     }
