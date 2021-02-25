@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { Sequelize, Model, DataTypes } from 'sequelize';
+import { api } from './api';
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -55,5 +57,20 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  }
+});
+
+
+ipcMain.on('api', (event, method: string, ...args: any[]) =>{
+  const reply = (data: any) => {
+      event.sender.send(`${method}reply`, data);
+  };
+  const success = (params: any) => reply({ errorCode: 0, params });
+  const failed= (params?: any) => reply({ errorCode: 1, params });
+  if (api[method]){
+      api[method]({ success, failed }, ...args);
+  }
+  else {
+    failed();
   }
 });
