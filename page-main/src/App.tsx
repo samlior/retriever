@@ -11,11 +11,18 @@ export class App extends React.Component{
   }
 
   handleTest() {
-    ipc.api('query', [{ field: 'price', op: 'gte', value: 100 }, { field: 'price', op: 'lte', value: 120 }], 5, 0).then((response) => {
-      if (response.errorCode === 0) {
-        console.log('query results:', response.params)
+    ipc.api('update', [{ field: 'price', value: 100 }, { field: 'name', value: 'wuhu' }]).then((response1) => {
+      if (response1.errorCode === 0) {
+        console.log('update success')
+        ipc.api('query', [/*{ field: 'price', op: 'gte', value: 100 }, { field: 'price', op: 'lte', value: 120 }*/], 5, 0).then((response2) => {
+          if (response2.errorCode === 0) {
+            console.log('query results:', JSON.stringify(response2.params))
+          } else {
+            console.log('query failed')
+          }
+        })
       } else {
-        console.log('query failed')
+        console.log('update failed')
       }
     })
   }
