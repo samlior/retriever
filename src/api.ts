@@ -119,5 +119,34 @@ export const api: {
             console.error('api query err:', err);
             handle.failed();
         }
+    },
+    update: async (handle, infos: Info[], id?: number) => {
+        await init();
+        try {
+            const installProperties = (data: any) => {
+                for (const info of infos) {
+                    data[info.field] = info.value;
+                }
+            }
+            if (id) {
+                const data = await Data.findByPk(id);
+                if (!data) {
+                    dialog.showErrorBox('错误', '数据丢失')
+                    process.exit(1)
+                }
+                installProperties(data);
+                await data.save();
+            }
+            else {
+                const data: any = {}
+                installProperties(data);
+                await Data.create(data)
+            }
+            handle.success();
+        }
+        catch(err) {
+            console.error('api update err:', err);
+            handle.failed();
+        }
     }
 };
