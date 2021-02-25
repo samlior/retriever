@@ -1,5 +1,35 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
+import { Sequelize, Model, DataTypes } from 'sequelize';
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './db/database.sqlite'
+});
+
+class Data extends Model {}
+
+Data.init({
+  name: {
+    type: DataTypes.STRING
+  },
+  age: {
+    type: DataTypes.NUMBER
+  }
+}, {
+  sequelize,
+  modelName: 'Data'
+});
+
+(async() => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync();
+  }
+  catch(err) {
+    console.error('Catch err:', err);
+  }
+})();
 
 function createWindow () {
   const win = new BrowserWindow({

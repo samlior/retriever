@@ -20,9 +20,12 @@
   },
   "homepage": "https://github.com/samlior/retriever#readme",
   "dependencies": {
-    "electron": "^11.3.0"
+    "electron": "^11.3.0",
+    "sequelize": "^6.5.0",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.28.9",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",
