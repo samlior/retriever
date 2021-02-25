@@ -41,7 +41,7 @@ function createWindow () {
     }
   });
 
-  win.loadFile(path.join(__dirname, '../page-main/dist/index.html'));
+  win.loadFile(path.join(__dirname, '../page-main/build/index.html'));
 }
 
 app.whenReady().then(createWindow);
