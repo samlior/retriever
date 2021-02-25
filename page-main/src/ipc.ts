@@ -29,4 +29,4 @@ class ipcSevice {
     }
 }
 
-export let ipc = new ipcSevice()
+export const ipc = new ipcSevice()
