@@ -6,12 +6,16 @@ import fs from 'fs';
 type Fields = {
     displayName: string,
     fieldName: string,
-    type: 'string' | 'number',
+    type: string,
 }[];
 
 let fields: Fields
 try {
-    fields = JSON.parse(fs.readFileSync('./fields.json').toString());
+    fields = [{
+        displayName: 'id',
+        fieldName: 'id',
+        type: 'number'
+    }].concat(JSON.parse(fs.readFileSync('./fields.json').toString()))
 }
 catch(err) {
     console.error('read fields.json faild, error:', err);
@@ -27,6 +31,9 @@ let fieldsObj: { [name: string]: any } = {
     }
 }
 for (const field of fields) {
+    if (field.fieldName === 'id') {
+        continue
+    }
     const fieldObj: any = {}
     fieldObj[field.fieldName] = { type: field.type === 'string' ? DataTypes.STRING : DataTypes.INTEGER }
     fieldsObj = Object.assign(fieldsObj, fieldObj)
@@ -102,6 +109,9 @@ function infoToOp(info: Info) {
 export const api: {
     [method: string]: (handle: { success: (params?: any) => void, failed: (params?: any) => void }, ...args: any[]) => any
 } = {
+    fields: (handle) => {
+        handle.success(fields);
+    },
     query: async (handle, infos: Info[], limit: number, offset: number) => {
         await init();
         try {
