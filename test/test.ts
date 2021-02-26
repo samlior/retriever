@@ -12,7 +12,7 @@ import { api } from '../src/api'
     }
     const results: boolean[] = []
     for (let i = 0; i < 50; i++) {
-        results.push(await work('update', [{fieldName: 'price', value: `${i}`}, {fieldName: 'name', value: `name${i}`}]))
+        results.push(await work('update', [{field: 'price', value: `${i}`}, {field: 'name', value: `name${i}`}]))
     }
     console.log(results.reduce((a, b) => a && b, true) ? 'all success' : 'something failed')
 })();

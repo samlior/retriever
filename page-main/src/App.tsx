@@ -62,6 +62,10 @@ export class App extends React.Component<any, AppState>{
     this.quering = false
   }
 
+  createNewOne() {
+
+  }
+
   private async loadFields() {
     if (this.state.fields.length === 0) {
       const response = await ipc.api('fields')
@@ -92,7 +96,12 @@ export class App extends React.Component<any, AppState>{
           <div className="div-conditions">
             <Condition valueChange={this.handleConditionValueChange.bind(this)} addCondition={this.handleAddCondition.bind(this)} />
           </div>
-          <Table fields={this.state.fields} data={this.state.data} startQuery={this.startQuery.bind(this)}/>
+          <Table
+            fields={this.state.fields}
+            data={this.state.data}
+            admin={true}
+            startQuery={this.startQuery.bind(this)}
+            createNewOne={this.createNewOne.bind(this)}/>
         </div>
       </div>
     )

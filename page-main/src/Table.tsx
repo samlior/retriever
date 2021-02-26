@@ -4,7 +4,9 @@ import './Table.css';
 type TableProps = {
     fields: { displayName: string }[],
     data: any[][],
-    startQuery: () => void
+    admin: boolean,
+    startQuery: () => void,
+    createNewOne: () => void
 };
 
 export class Table extends React.Component<TableProps> {
@@ -16,9 +18,20 @@ export class Table extends React.Component<TableProps> {
         return (
             <div>
                 <div className="div-table-header">
-                    <button className="button-start-query" onClick={this.props.startQuery}>
-                        开始搜索
-                    </button>
+                    <div className="div-table-header-front">
+                        <button className="button-start-query" onClick={this.props.startQuery}>
+                            开始搜索
+                        </button>
+                        {!this.props.admin ? undefined :
+                            <button className="button-create-new-one" onClick={this.props.createNewOne}>
+                                新增记录
+                            </button>}
+                    </div>
+                    <div className="div-table-header-tail">
+                        <span>
+                            SPAN
+                        </span>
+                    </div>
                 </div>
                 <div className="div-table-wrapper">
                     <table>
