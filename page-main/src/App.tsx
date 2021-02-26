@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { ipc } from './ipc';
+import { Condition } from './Condition';
 
 declare let electron: any;
 
@@ -23,7 +23,6 @@ export class App extends React.Component<any, { table: JSX.Element }>{
   constructor(props: any) {
     super(props)
     this.state = { table: <table></table> }
-    this.handleUpdate = this.handleUpdate.bind(this)
     this.makeTable()
   }
 
@@ -60,16 +59,26 @@ export class App extends React.Component<any, { table: JSX.Element }>{
     })
   }
 
+  handleAddCondition() {
+
+  }
+
+  handleConditionValueChange(type: string, value: string) {
+    console.log('handleConditionValueChange, type:', type, 'value:', value)
+  }
+
   render() {
     return (
       <div className="div-app">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <button onClick={this.handleUpdate}>
-              update
+        <div className="div-main">
+          <button onClick={this.handleUpdate.bind(this)}>
+            update
           </button>
+          <div className="div-conditions">
+            <Condition valueChange={this.handleConditionValueChange.bind(this)} addCondition={this.handleAddCondition.bind(this)} />
+          </div>
           {this.state.table}
-        </header>
+        </div>
       </div>
     )
   }
