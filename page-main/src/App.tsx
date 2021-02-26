@@ -100,6 +100,8 @@ export class App extends React.Component<any, AppState>{
             fields={this.state.fields}
             data={this.state.data}
             admin={true}
+            limit={this.state.limit}
+            offset={this.state.offset}
             startQuery={this.startQuery.bind(this)}
             createNewOne={this.createNewOne.bind(this)}/>
         </div>

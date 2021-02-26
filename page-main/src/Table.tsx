@@ -5,6 +5,8 @@ type TableProps = {
     fields: { displayName: string }[],
     data: any[][],
     admin: boolean,
+    limit: number,
+    offset: number,
     startQuery: () => void,
     createNewOne: () => void
 };
@@ -29,8 +31,15 @@ export class Table extends React.Component<TableProps> {
                     </div>
                     <div className="div-table-header-tail">
                         <span>
-                            SPAN
+                            每页显示
                         </span>
+                        <input type="number" min="0" className="input-limit-and-offset"/>
+                        <button className="button-little">
+                            <img src="./first.png" />
+                        </button>
+                        <button className="button-little">
+                            <img src="./previous.png" />
+                        </button>
                     </div>
                 </div>
                 <div className="div-table-wrapper">
