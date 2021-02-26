@@ -4,7 +4,8 @@
   "description": "Retriever for anything",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc && electron . --enable-logging"
+    "start": "tsc && electron . --enable-logging",
+    "test": "node -r ts-node/register test/test.ts"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
   }
 }
