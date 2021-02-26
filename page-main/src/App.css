@@ -12,18 +12,25 @@
     flex-wrap: wrap;
 }
 
-table,
-th,
-td {
-    border: 1px solid black;
-}
-
 table {
-    border-collapse: collapse;
-    border-radius: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border-spacing: 0;
 }
 
-td {
+td,
+th {
     text-align: center;
-    padding: 5px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+td:last-child,
+th:last-child {
+    border-right: 0;
+}
+
+tr:last-child td,
+tr:last-child th {
+    border-bottom: 0;
 }
