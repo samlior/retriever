@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Sequelize, Model, DataTypes, Op } from 'sequelize';
-import { dialog } from 'electron';
+import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
+
+let mainWindow: BrowserWindow
+
+export function setMainWindow(window: BrowserWindow) {
+    mainWindow = window
+}
 
 type Fields = {
     displayName: string,
@@ -109,6 +115,21 @@ function infoToOp(info: Info) {
 export const api: {
     [method: string]: (handle: { success: (params?: any) => void, failed: (params?: any) => void }, ...args: any[]) => any
 } = {
+    message: (handle, message: string) => {
+        dialog.showMessageBox(mainWindow, { type: 'info', message, buttons: ['确定'] }).catch((err) => {
+            console.error('api message err:', err);
+        })
+    },
+    confirm: async (handle, message: string) => {
+        try {
+            const returnValue = await dialog.showMessageBox(mainWindow, { type: 'info', message, buttons: ['确定', '取消'] });
+            handle.success(returnValue.response === 0);
+        }
+        catch(err) {
+            console.error('api confirm err:', err);
+            handle.failed();
+        }
+    },
     fields: (handle) => {
         handle.success(fields);
     },

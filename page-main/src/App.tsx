@@ -15,33 +15,51 @@ function objsToData(objs: any[], state: AppState) {
     }
     data.push(row)
   }
+  while (data.length < state.limit) {
+    const row: string[] = []
+    for (let i = 0; i < state.fields.length; i++) {
+      row.push('-')
+    }
+    data.push(row)
+  }
   return data
 }
 
 type AppState = {
   fields: { fieldName: string, displayName: string }[],
   data: any[][],
+  limit: number,
+  offset: number
 }
 
 export class App extends React.Component<any, AppState>{
+  private quering: boolean = false
+
   constructor(props: any) {
     super(props)
     this.state = { 
       fields: [],
-      data: []
+      data: [],
+      limit: 10,
+      offset: 0
     }
     this.loadFields()
   }
 
   async startQuery() {
-    let response = await ipc.api('update', [{ field: 'price', value: 100 }, { field: 'name', value: 'wuhu' }])
-    response = await ipc.api('update', [{ field: 'price', value: 110 }, { field: 'name', value: 'wuhu2' }])
-    response = await ipc.api('query', [], 5, 0)
-    if (response.errorCode === 0) {
-      this.makeTable(objsToData(response.params))
-    } else {
-      console.log('query failed')
+    if (this.quering) {
+      return
     }
+    this.quering = true
+    const response = await ipc.api('query', [], this.state.limit, this.state.offset)
+    if (response.errorCode === 1) {
+      ipc.apiSend('message', '查询失败')
+    } else {
+      let state: any = this.state
+      state.data = objsToData(response.params, state)
+      this.setState(state)
+    }
+    this.quering = false
   }
 
   private async loadFields() {

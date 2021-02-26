@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { api } from './api';
+import { api, setMainWindow } from './api';
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -14,6 +14,7 @@ function createWindow () {
   });
 
   win.loadFile(path.join(__dirname, '../page-main/build/index.html'));
+  setMainWindow(win);
 }
 
 app.whenReady().then(createWindow);
@@ -29,7 +30,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
 
 ipcMain.on('api', (event, method: string, ...args: any[]) =>{
   const reply = (data: any) => {
