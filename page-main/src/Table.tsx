@@ -48,12 +48,12 @@ export class Table extends React.Component<TableProps> {
                         <span>
                             当前第
                         </span>
-                        <input type="number" min="0" value={this.props.offset} onChange={this.props.offsetChange} className="input-limit-and-offset"/>
+                        <input type="number" min="0" value={this.props.offset + 1} onChange={this.props.offsetChange} className="input-limit-and-offset"/>
                         <button className="button-little-2" onClick={() => { this.props.startQuery() }}>
                             <img className="img2" src="./go.png" alt="" />
                         </button>
                         <span>
-                            页/共{this.props.pageCount}页
+                            页/共{this.props.pageCount + 1}页
                         </span>
                         <button className="button-little" onClick={() => { this.props.startQuery(this.props.offset + 1) }}>
                             <img src="./next.png" alt="" />

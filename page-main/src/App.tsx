@@ -131,13 +131,16 @@ export class App extends React.Component<any, AppState>{
             startQuery={this.startQuery.bind(this)}
             createNewOne={this.createNewOne.bind(this)}
             limitChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const state: any = this.state;
-              state.limit = Number(event.target.value);
+              const state: any = this.state
+              state.limit = Number(event.target.value)
               this.setState(state)
             }}
             offsetChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const state: any = this.state;
-              state.offset = Number(event.target.value);
+              state.offset = Number(event.target.value) - 1
+              if (state.offset < 0) {
+                state.offset = 0
+              }
               this.setState(state)
             }}/>
         </div>
