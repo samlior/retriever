@@ -13,7 +13,14 @@ export class NumberCondition extends React.Component<ConditionProps>{
         }
         return (
             <div className="div-condition-main">
-                <span className="span-condition-display-name">{this.props.displayName}:</span>
+                <div className="div-condition-display-name-wrapper">
+                    <span className="span-condition-display-name">{this.props.displayName}:</span>
+                    <div className="div-condition-delete-wrapper">
+                        <button className="button-delete">
+                            <img className="img-delete" src="./delete.png" alt="" />
+                        </button>
+                    </div>
+                </div>
                 <div className="div-condition-colunm-wrapper">
                     <div className="div-condition-colunm">
                         <div className="div-condition-span-wrapper">

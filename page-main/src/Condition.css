@@ -20,6 +20,42 @@
     font-weight: bold;
 }
 
+.div-condition-display-name-wrapper {
+    display: flex;
+}
+
+.div-condition-delete-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+.img-delete {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+.button-delete {
+    background-color: rgb(29, 30, 32);
+    outline: none;
+    border: none;
+    width: 2px;
+    height: 22px;
+    margin-right: 10px;
+    position: relative;
+}
+
 .span-condition-line {
     font-size: 17px;
     font-weight: bold;
