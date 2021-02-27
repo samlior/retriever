@@ -20,6 +20,9 @@ export class NumberCondition extends React.Component<ConditionProps>{
         const handleValueChange = (type: string, event: React.ChangeEvent<HTMLInputElement>) => {
             this.props.valueChange(type, event.target.value)
         }
+        const clear = (type: string) => {
+            this.props.valueChange(type, '')
+        }
         return (
             <div className="div-condition-main">
                 <div className="div-condition-display-name-wrapper">
@@ -51,23 +54,23 @@ export class NumberCondition extends React.Component<ConditionProps>{
                     <div className="div-condition-colunm-2">
                         <div className="div-condition-input-wrapper">
                             <input type="number" min="0" className="input-condition" value={this.props.lt} onChange={handleValueChange.bind(this, 'lt')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'lt')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="number" min="0" className="input-condition" value={this.props.lte} onChange={handleValueChange.bind(this, 'lte')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'lte')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="number" min="0" className="input-condition" value={this.props.eq} onChange={handleValueChange.bind(this, 'eq')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'eq')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="number" min="0" className="input-condition" value={this.props.gte} onChange={handleValueChange.bind(this, 'gte')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'gte')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="number" min="0" className="input-condition" value={this.props.gt} onChange={handleValueChange.bind(this, 'gt')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'gt')}>清空</button>
                         </div>
                     </div>
                 </div>
@@ -80,6 +83,9 @@ export class StringCondition extends React.Component<ConditionProps>{
     render() {
         const handleValueChange = (type: string, event: React.ChangeEvent<HTMLInputElement>) => {
             this.props.valueChange(type, event.target.value)
+        }
+        const clear = (type: string) => {
+            this.props.valueChange(type, '')
         }
         return (
             <div className="div-condition-main">
@@ -109,19 +115,19 @@ export class StringCondition extends React.Component<ConditionProps>{
                     <div className="div-condition-colunm-2">
                         <div className="div-condition-input-wrapper">
                             <input type="text" className="input-condition-text" value={this.props.eq} onChange={handleValueChange.bind(this, 'eq')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'eq')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="text" className="input-condition-text" value={this.props.sw} onChange={handleValueChange.bind(this, 'sw')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'sw')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="text" className="input-condition-text" value={this.props.ew} onChange={handleValueChange.bind(this, 'ew')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'ew')}>清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
                             <input type="text" className="input-condition-text" value={this.props.lk} onChange={handleValueChange.bind(this, 'lk')}/>
-                            <button className="button-condition-clear">清空</button>
+                            <button className="button-condition-clear" onClick={clear.bind(this, 'lk')}>清空</button>
                         </div>
                     </div>
                 </div>
