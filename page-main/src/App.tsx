@@ -29,6 +29,8 @@ function objsToData(objs: any[], state: AppState) {
 type OpInfo = { field: string, op: string, value: string | number }
 
 class AbstractCondition {
+  app: App
+
   lt = ''
   lte = ''
   eq = ''
@@ -42,10 +44,11 @@ class AbstractCondition {
   fieldName: string
   displayName: string
   type: 'string' | 'number'
-  constructor(fieldName: string, displayName: string, type: 'string' | 'number') {
+  constructor(fieldName: string, displayName: string, type: 'string' | 'number', app: App) {
     this.fieldName = fieldName
     this.displayName = displayName
     this.type = type
+    this.app = app
   }
 
   makeOps() {
@@ -89,10 +92,14 @@ class AbstractCondition {
     }
   }
 
+  deleteCondition() {
+    this.app.deleteCondition(this)
+  }
+
   render() {
     return this.type === 'number' ? 
-      <NumberCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} /> :
-      <StringCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} />
+      <NumberCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} /> :
+      <StringCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} />
   }
 }
 
@@ -104,6 +111,8 @@ type AppState = {
   pageCount: number,
   conditions: AbstractCondition[]
 }
+
+let index = 0
 
 export class App extends React.Component<any, AppState>{
   private quering: boolean = false
@@ -117,7 +126,7 @@ export class App extends React.Component<any, AppState>{
       limit: 10,
       offset: 0,
       pageCount: 0,
-      conditions: [new AbstractCondition('price', '价格', 'number'), new AbstractCondition('name', '名字', 'string')]
+      conditions: []
     }
     this.init()
   }
@@ -161,16 +170,27 @@ export class App extends React.Component<any, AppState>{
 
   async addCondition() {
     await this.queryLock(async () => {
+      let i = index++
       const response = await ipc.api('addCondition')
       if (response.errorCode === 0) {
-        const { fieldName, displayName, type }: { fieldName: string, displayName: string, type: 'string' | 'number' } = response.params
-        const state = this.state
-        state.conditions.push(new AbstractCondition(fieldName, displayName, type))
-        this.setState(state)
+        if (response.params !== undefined) {
+          const { fieldName, displayName, type }: { fieldName: string, displayName: string, type: 'string' | 'number' } = response.params
+          const state = this.state
+          state.conditions.push(new AbstractCondition(fieldName, displayName, type, this))
+          this.setState(state)
+        }
       } else {
         console.error('addCondition failed')
       }
     })
+  }
+
+  deleteCondition(condition: AbstractCondition) {
+    const state = this.state
+    if (state.conditions.indexOf(condition) !== -1) {
+      state.conditions.splice(state.conditions.indexOf(condition), 1)
+      this.setState(state)
+    }
   }
 
   private async init() {

@@ -58,7 +58,7 @@ export class App extends React.Component<any, AppState>{
           {this.state.fields.map((f) => <button className="button-field-name" onClick={() => { this.fieldNameClicked(f.displayName) }}>{f.displayName}</button>)}
         </div>
         <div className="div-button-wrapper">
-          <button className="button-cancel" onClick={() => { window.close() }}>
+          <button className="button-cancel" onClick={() => { ipc.apiSend('cancelAddCondition'); window.close() }}>
             取消
           </button>
         </div>

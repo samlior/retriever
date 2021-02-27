@@ -3,7 +3,8 @@ import './Condition.css';
 
 type ConditionProps = {
     displayName: string
-    valueChange: (type: string, value: string) => void
+    valueChange: (type: string, value: string) => void,
+    deleteCondition: () => void
 }
 
 export class NumberCondition extends React.Component<ConditionProps>{
@@ -16,7 +17,7 @@ export class NumberCondition extends React.Component<ConditionProps>{
                 <div className="div-condition-display-name-wrapper">
                     <span className="span-condition-display-name">{this.props.displayName}:</span>
                     <div className="div-condition-delete-wrapper">
-                        <button className="button-delete">
+                        <button className="button-delete" onClick={this.props.deleteCondition}>
                             <img className="img-delete" src="./delete.png" alt="" />
                         </button>
                     </div>
@@ -74,7 +75,14 @@ export class StringCondition extends React.Component<ConditionProps>{
         }
         return (
             <div className="div-condition-main">
-                <span className="span-condition-display-name">{this.props.displayName}:</span>
+                <div className="div-condition-display-name-wrapper">
+                    <span className="span-condition-display-name">{this.props.displayName}:</span>
+                    <div className="div-condition-delete-wrapper">
+                        <button className="button-delete" onClick={this.props.deleteCondition}>
+                            <img className="img-delete" src="./delete.png" alt="" />
+                        </button>
+                    </div>
+                </div>
                 <div className="div-condition-colunm-wrapper">
                     <div className="div-condition-colunm">
                         <div className="div-condition-span-wrapper">

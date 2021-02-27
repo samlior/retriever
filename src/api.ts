@@ -6,7 +6,7 @@ import path from 'path';
 
 let mainWindow!: BrowserWindow
 let addConditionWindow: BrowserWindow | undefined
-let addConditionResolve: ((result: string) => void) | undefined;
+let addConditionResolve: ((result?: string) => void) | undefined;
 
 export function setMainWindow(window: BrowserWindow) {
     mainWindow = window
@@ -141,10 +141,10 @@ export const api: {
                 addConditionWindow.loadFile(path.join(__dirname, '../page-add-condition/build/index.html'))
                 addConditionWindow.show()
             }
-            const displayName = await new Promise<string>((resolve) => {
+            const displayName = await new Promise<string | undefined>((resolve) => {
                 addConditionResolve = resolve
             })
-            handle.success(fields.find((f) => f.displayName === displayName)!)
+            handle.success(displayName ? fields.find((f) => f.displayName === displayName)! : undefined)
         }
         catch(err) {
             console.error('api addCondition err:', err);
@@ -154,6 +154,12 @@ export const api: {
     addConditionResult: (handle, result: string) => {
         if (addConditionResolve) {
             addConditionResolve(result)
+            addConditionResolve = undefined
+        }
+    },
+    cancelAddCondition: (handle) => {
+        if (addConditionResolve) {
+            addConditionResolve()
             addConditionResolve = undefined
         }
     },
