@@ -58,12 +58,18 @@ export class App extends React.Component<any, AppState>{
     this.quering = false
   }
 
-  async startQuery() {
+  async startQuery(newOffset?: number) {
     await this.queryLock(async () => {
-      const response = await ipc.api('query', [], this.state.limit, this.state.offset)
+      const response = await ipc.api('query', [], this.state.limit, (newOffset !== undefined ? newOffset : this.state.offset) * this.state.limit)
       if (response.errorCode === 0) {
         const state: any = this.state
-        state.pageCount = Math.ceil(this.count / state.limit);
+        if (newOffset !== undefined) {
+          state.offset = newOffset
+        }
+        state.pageCount = Math.ceil(this.count / state.limit) - 1
+        if (state.pageCount < 0) {
+          state.pageCount = 0
+        }
         state.data = objsToData(response.params, state)
         this.setState(state)
       } else {
@@ -84,8 +90,12 @@ export class App extends React.Component<any, AppState>{
         if (response.errorCode === 0 && response2.errorCode === 0) {
           this.count = response2.params
           const state: any = this.state
-          state.pageCount = Math.ceil(this.count / state.limit);
+          state.pageCount = Math.ceil(this.count / state.limit) - 1
+          if (state.pageCount < 0) {
+            state.pageCount = 0
+          }
           state.fields = response.params
+          state.data = objsToData([], state)
           this.setState(state)
         } else {
           console.error('init failed')
