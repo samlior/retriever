@@ -45,12 +45,17 @@ export class App extends React.Component<any, AppState>{
     })
   }
 
+  fieldNameClicked(displayName: string) {
+    ipc.apiSend('addConditionResult', displayName)
+    window.close()
+  }
+
   render() {
     return (
       <div className="div-main">
         <span>请选择要筛选的字段:</span>
         <div className="div-field-name-wrapper">
-          {this.state.fields.map((f) => <button className="button-field-name">{f.displayName}</button>)}
+          {this.state.fields.map((f) => <button className="button-field-name" onClick={() => { this.fieldNameClicked(f.displayName) }}>{f.displayName}</button>)}
         </div>
         <div className="div-button-wrapper">
           <button className="button-cancel" onClick={() => { window.close() }}>

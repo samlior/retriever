@@ -101,13 +101,13 @@ type AppState = {
   data: any[][],
   limit: number,
   offset: number,
-  pageCount: number
+  pageCount: number,
+  conditions: AbstractCondition[]
 }
 
 export class App extends React.Component<any, AppState>{
   private quering: boolean = false
   private count: number = 0
-  private conditions: AbstractCondition[] = []
 
   constructor(props: any) {
     super(props)
@@ -116,10 +116,10 @@ export class App extends React.Component<any, AppState>{
       data: [],
       limit: 10,
       offset: 0,
-      pageCount: 0
+      pageCount: 0,
+      conditions: [new AbstractCondition('price', '价格', 'number'), new AbstractCondition('name', '名字', 'string')]
     }
     this.init()
-    this.conditions = [new AbstractCondition('price', '价格', 'number'), new AbstractCondition('name', '名字', 'string')]
   }
 
   private async queryLock<T>(fn: () => Promise<T>) {
@@ -134,7 +134,7 @@ export class App extends React.Component<any, AppState>{
   async startQuery(newOffset?: number) {
     await this.queryLock(async () => {
       let ops: OpInfo[] = []
-      for (const condition of this.conditions) {
+      for (const condition of this.state.conditions) {
         ops = ops.concat(condition.makeOps())
       }
       const response = await ipc.api('query', ops, this.state.limit, (newOffset !== undefined ? newOffset : this.state.offset) * this.state.limit)
@@ -159,8 +159,16 @@ export class App extends React.Component<any, AppState>{
 
   }
 
-  addCondition() {
-    ipc.apiSend('addCondition')
+  async addCondition() {
+    const response = await ipc.api('addCondition')
+    if (response.errorCode === 0) {
+      const { fieldName, displayName, type }: { fieldName: string, displayName: string, type: 'string' | 'number' } = response.params
+      const state = this.state
+      state.conditions.push(new AbstractCondition(fieldName, displayName, type))
+      this.setState(state)
+    } else {
+      console.error('addCondition failed')
+    }
   }
 
   private async init() {
@@ -192,7 +200,7 @@ export class App extends React.Component<any, AppState>{
       <div className="div-app">
         <div className="div-main">
           <div className="div-conditions">
-            {this.conditions.map((c) => c.render())}
+            {this.state.conditions.map((c) => c.render())}
             <button className="button-add-condition" onClick={this.addCondition.bind(this)}>
               <img className="img-add-condition" src="./add.png" alt="" />
             </button>

@@ -6,6 +6,7 @@ import path from 'path';
 
 let mainWindow!: BrowserWindow
 let addConditionWindow: BrowserWindow | undefined
+let addConditionResolve: ((result: string) => void) | undefined;
 
 export function setMainWindow(window: BrowserWindow) {
     mainWindow = window
@@ -117,23 +118,43 @@ function infoToOp(info: Info) {
 export const api: {
     [method: string]: (handle: { success: (params?: any) => void, failed: (params?: any) => void }, ...args: any[]) => any
 } = {
-    addCondition: () => {
-        if (addConditionWindow === undefined) {
-            addConditionWindow = new BrowserWindow({
-                width: 400,
-                height: 560,
-                parent: mainWindow,
-                modal: true,
-                frame: false,
-                webPreferences: {
-                    nodeIntegration: true,
-                    webSecurity: false
-                }
-            });
+    addCondition: async (handle) => {
+        if (addConditionResolve) {
+            handle.failed();
+            return
+        }
+        try {
+            if (addConditionWindow === undefined) {
+                addConditionWindow = new BrowserWindow({
+                    width: 400,
+                    height: 560,
+                    parent: mainWindow,
+                    modal: true,
+                    frame: false,
+                    webPreferences: {
+                        nodeIntegration: true,
+                        webSecurity: false
+                    }
+                });
 
-            addConditionWindow.on('close', () => { addConditionWindow = undefined })
-            addConditionWindow.loadFile(path.join(__dirname, '../page-add-condition/build/index.html'))
-            addConditionWindow.show()
+                addConditionWindow.on('close', () => { addConditionWindow = undefined })
+                addConditionWindow.loadFile(path.join(__dirname, '../page-add-condition/build/index.html'))
+                addConditionWindow.show()
+            }
+            const displayName = await new Promise<string>((resolve) => {
+                addConditionResolve = resolve
+            })
+            handle.success(fields.find((f) => f.displayName === displayName)!)
+        }
+        catch(err) {
+            console.error('api addCondition err:', err);
+            handle.failed();
+        }
+    },
+    addConditionResult: (handle, result: string) => {
+        if (addConditionResolve) {
+            addConditionResolve(result)
+            addConditionResolve = undefined
         }
     },
     message: (handle, message: string) => {
