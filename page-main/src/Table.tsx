@@ -37,7 +37,7 @@ export class Table extends React.Component<TableProps> {
                             <img className="img2" src="./refresh.png" alt="" />
                         </button>
                         <span>
-                            条记录
+                            条记录; 
                         </span>
                         <button className="button-little" onClick={() => { this.props.startQuery(0) }}>
                             <img src="./first.png" alt="" />

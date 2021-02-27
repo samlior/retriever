@@ -11,6 +11,8 @@
     text-align: left;
     display: flex;
     flex-direction: column;
+    width: 200px;
+    height: 170px;
 }
 
 .span-condition-display-name {
@@ -30,6 +32,10 @@
 .div-condition-colunm,.div-condition-colunm-2 {
     display: flex;
     flex-direction: column;
+}
+
+.div-condition-colunm {
+    min-width: 78px;
 }
 
 .div-condition-colunm-2 {

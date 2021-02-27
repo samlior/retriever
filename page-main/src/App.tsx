@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { ipc } from './ipc';
-import { NumberCondition } from './Condition';
+import { NumberCondition, StringCondition } from './Condition';
 import { Table } from './Table';
 
 declare let electron: any;
@@ -39,10 +39,12 @@ class AbstractCondition {
   sw = ''
   ew = ''
 
-  field: string
+  fieldName: string
+  displayName: string
   type: 'string' | 'number'
-  constructor(field: string, type: 'string' | 'number') {
-    this.field = field
+  constructor(fieldName: string, displayName: string, type: 'string' | 'number') {
+    this.fieldName = fieldName
+    this.displayName = displayName
     this.type = type
   }
 
@@ -53,44 +55,44 @@ class AbstractCondition {
       if (opValue === '') {
         continue
       }
-      results.push({ field: this.field, op: opName, value: opValue })
+      results.push({ field: this.fieldName, op: opName, value: opValue })
     }
     return results
   }
 
+  valueChange(type: string, value: string) {
+    switch(type) {
+      case 'lt':
+          this.lt = value
+          break
+      case 'lte':
+          this.lte = value
+          break
+      case 'eq':
+          this.eq = value
+          break
+      case 'gte':
+          this.gte = value
+          break
+      case 'gt':
+          this.gt = value
+          break
+      case 'ew':
+          this.ew = value
+          break
+      case 'sw':
+          this.sw = value
+          break
+      case 'lk':
+          this.lk = value
+          break
+    }
+  }
+
   render() {
-    return this.type === 'number' ? (
-      <NumberCondition displayName="名字" valueChange={(type: string, value: string) => {
-          switch(type) {
-            case 'lt':
-                this.lt = value
-                break
-            case 'lte':
-                this.lte = value
-                break
-            case 'eq':
-                this.eq = value
-                break
-            case 'gte':
-                this.gte = value
-                break
-            case 'gt':
-                this.gt = value
-                break
-            case 'ew':
-                this.ew = value
-                break
-            case 'sw':
-                this.sw = value
-                break
-            case 'lk':
-                this.lk = value
-                break
-        }
-      }} />
-    ) : (
-      <div></div>
-    )
+    return this.type === 'number' ? 
+      <NumberCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} /> :
+      <StringCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} />
   }
 }
 
@@ -117,7 +119,7 @@ export class App extends React.Component<any, AppState>{
       pageCount: 0
     }
     this.init()
-    this.conditions = [new AbstractCondition('price', 'number')]
+    this.conditions = [new AbstractCondition('price', '价格', 'number'), new AbstractCondition('name', '名字', 'string')]
   }
 
   private async queryLock<T>(fn: () => Promise<T>) {
