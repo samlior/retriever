@@ -85,19 +85,19 @@ export class StringCondition extends React.Component<ConditionProps>{
                     </div>
                     <div className="div-condition-colunm-2">
                         <div className="div-condition-input-wrapper">
-                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'eq')}/>
+                            <input type="text" className="input-condition-text" onChange={handleValueChange.bind(this, 'eq')}/>
                             <button className="button-condition-clear">清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
-                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'sw')}/>
+                            <input type="text" className="input-condition-text" onChange={handleValueChange.bind(this, 'sw')}/>
                             <button className="button-condition-clear">清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
-                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'ew')}/>
+                            <input type="text" className="input-condition-text" onChange={handleValueChange.bind(this, 'ew')}/>
                             <button className="button-condition-clear">清空</button>
                         </div>
                         <div className="div-condition-input-wrapper">
-                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'lk')}/>
+                            <input type="text" className="input-condition-text" onChange={handleValueChange.bind(this, 'lk')}/>
                             <button className="button-condition-clear">清空</button>
                         </div>
                     </div>
