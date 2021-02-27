@@ -33,12 +33,12 @@ export class Table extends React.Component<TableProps> {
                             每页显示
                         </span>
                         <input type="number" min="0" value={this.props.limit} onChange={this.props.limitChange} className="input-limit-and-offset"/>
+                        <button className="button-little-2">
+                            <img className="img2" src="./refresh.png" alt="" />
+                        </button>
                         <span>
                             条记录
                         </span>
-                        <button className="button-little">
-                            <img src="./refresh.png" alt="" />
-                        </button>
                         <button className="button-little">
                             <img src="./first.png" alt="" />
                         </button>
@@ -49,12 +49,12 @@ export class Table extends React.Component<TableProps> {
                             当前第
                         </span>
                         <input type="number" min="0" value={this.props.offset} onChange={this.props.offsetChange} className="input-limit-and-offset"/>
+                        <button className="button-little-2">
+                            <img className="img2" src="./go.png" alt="" />
+                        </button>
                         <span>
                             页/共{this.props.pageCount}页
                         </span>
-                        <button className="button-little">
-                            <img src="./go.png" alt="" />
-                        </button>
                         <button className="button-little">
                             <img src="./next.png" alt="" />
                         </button>
