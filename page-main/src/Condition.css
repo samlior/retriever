@@ -2,7 +2,7 @@
 
 .div-condition-main {
     background-color: rgb(29, 30, 32);
-    padding: 15px;
+    padding: 20px;
     border-radius: 20px;
     border: none;
     margin-left: 15px;
@@ -14,7 +14,6 @@
 }
 
 .span-condition-display-name {
-    margin-left: 5px;
     font-size: 23px;
     font-weight: bold;
 }
@@ -26,7 +25,6 @@
 
 .div-condition-colunm-wrapper {
     display: flex;
-    margin-top: 5px;
 }
 
 .div-condition-colunm,.div-condition-colunm-2 {
@@ -43,13 +41,42 @@
     height: 22px;
 }
 
+.div-condition-input-wrapper {
+    margin-top: 5px;
+    height: 22px;
+    display: flex;
+}
+
+.button-condition-clear {
+    outline: none;
+    border: none;
+    color: rgb(32, 33, 36);
+    background-color: rgb(80, 250, 123);
+    font-weight: bold;
+    width: 45px;
+    height: 22px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 15px;
+}
+
+.button-condition-clear:hover
+{
+    background-color: rgb(5, 179, 48);
+}
+
+.button-condition-clear:active
+{
+    background-color: rgb(26,27,29);
+    color: white;
+}
+
 .input-condition {
     outline: none;
     border: none;
-    margin-top: 5px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    width: 35%;
+    width: 56px;
     text-align: center;
     height: 20px;
 }

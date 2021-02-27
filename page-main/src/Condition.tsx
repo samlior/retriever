@@ -33,11 +33,26 @@ export class NumberCondition extends React.Component<ConditionProps>{
                         </div>
                     </div>
                     <div className="div-condition-colunm-2">
-                        <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'lt')}/>
-                        <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'lte')}/>
-                        <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'eq')}/>
-                        <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'gte')}/>
-                        <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'gt')}/>
+                        <div className="div-condition-input-wrapper">
+                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'lt')}/>
+                            <button className="button-condition-clear">清空</button>
+                        </div>
+                        <div className="div-condition-input-wrapper">
+                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'lte')}/>
+                            <button className="button-condition-clear">清空</button>
+                        </div>
+                        <div className="div-condition-input-wrapper">
+                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'eq')}/>
+                            <button className="button-condition-clear">清空</button>
+                        </div>
+                        <div className="div-condition-input-wrapper">
+                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'gte')}/>
+                            <button className="button-condition-clear">清空</button>
+                        </div>
+                        <div className="div-condition-input-wrapper">
+                            <input type="number" min="0" className="input-condition" onChange={handleValueChange.bind(this, 'gt')}/>
+                            <button className="button-condition-clear">清空</button>
+                        </div>
                     </div>
                 </div>
             </div>
