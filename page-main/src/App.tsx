@@ -3,6 +3,7 @@ import './App.css';
 import { ipc } from './ipc';
 import { Condition } from './Condition';
 import { Table } from './Table';
+import { runInThisContext } from 'vm';
 
 declare let electron: any;
 
@@ -11,7 +12,8 @@ function objsToData(objs: any[], state: AppState) {
   for (const obj of objs) {
     const row: any[] = []
     for (const field of state.fields) {
-      row.push(obj[field.fieldName])
+      const value = obj[field.fieldName]
+      row.push(value === null || value === undefined ? '-' : value)
     }
     data.push(row)
   }
@@ -25,6 +27,47 @@ function objsToData(objs: any[], state: AppState) {
   return data
 }
 
+type OpInfo = { field: string, op: string, value: string | number }
+
+class AbstractCondition {
+  lt = ''
+  lte = ''
+  eq = ''
+  gte = ''
+  gt = ''
+
+  lk = ''
+  sw = ''
+  ew = ''
+
+  field: string
+  type: 'string' | 'number'
+  constructor(field: string, type: 'string' | 'number') {
+    this.field = field
+    this.type = type
+  }
+
+  makeOps() {
+    const results: OpInfo[] = []
+    const ops = [['lt', this.lt]]
+    for (const [opName, opValue] of ops) {
+      if (opValue === '') {
+        continue
+      }
+      results.push({ field: this.field, op: opName, value: opValue })
+    }
+    return results
+  }
+
+  render() {
+    return this.type === 'string' ? (
+      <Condition />
+    ) : (
+      <Condition />
+    )
+  }
+}
+
 type AppState = {
   fields: { fieldName: string, displayName: string }[],
   data: any[][],
@@ -35,7 +78,8 @@ type AppState = {
 
 export class App extends React.Component<any, AppState>{
   private quering: boolean = false
-  private count: number = 0 
+  private count: number = 0
+  private conditions: AbstractCondition[] = []
 
   constructor(props: any) {
     super(props)
@@ -60,7 +104,11 @@ export class App extends React.Component<any, AppState>{
 
   async startQuery(newOffset?: number) {
     await this.queryLock(async () => {
-      const response = await ipc.api('query', [], this.state.limit, (newOffset !== undefined ? newOffset : this.state.offset) * this.state.limit)
+      let ops: OpInfo[] = []
+      for (const condition of this.conditions) {
+        ops = ops.concat(condition.makeOps())
+      }
+      const response = await ipc.api('query', ops, this.state.limit, (newOffset !== undefined ? newOffset : this.state.offset) * this.state.limit)
       if (response.errorCode === 0) {
         const state: any = this.state
         if (newOffset !== undefined) {
