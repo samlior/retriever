@@ -29,11 +29,13 @@ type AppState = {
   fields: { fieldName: string, displayName: string }[],
   data: any[][],
   limit: number,
-  offset: number
+  offset: number,
+  pageCount: number
 }
 
 export class App extends React.Component<any, AppState>{
   private quering: boolean = false
+  private count: number = 0 
 
   constructor(props: any) {
     super(props)
@@ -41,44 +43,57 @@ export class App extends React.Component<any, AppState>{
       fields: [],
       data: [],
       limit: 10,
-      offset: 0
+      offset: 0,
+      pageCount: 0
     }
-    this.loadFields()
+    this.init()
   }
 
-  async startQuery() {
+  private async queryLock<T>(fn: () => Promise<T>) {
     if (this.quering) {
       return
     }
     this.quering = true
-    const response = await ipc.api('query', [], this.state.limit, this.state.offset)
-    if (response.errorCode === 1) {
-      ipc.apiSend('message', '查询失败')
-    } else {
-      let state: any = this.state
-      state.data = objsToData(response.params, state)
-      this.setState(state)
-    }
+    await fn()
     this.quering = false
+  }
+
+  async startQuery() {
+    await this.queryLock(async () => {
+      const response = await ipc.api('query', [], this.state.limit, this.state.offset)
+      if (response.errorCode === 0) {
+        const state: any = this.state
+        state.pageCount = Math.ceil(this.count / state.limit);
+        state.data = objsToData(response.params, state)
+        this.setState(state)
+      } else {
+        ipc.apiSend('message', '查询失败')
+      }
+    })
   }
 
   createNewOne() {
 
   }
 
-  private async loadFields() {
-    if (this.state.fields.length === 0) {
-      const response = await ipc.api('fields')
-      if (response.errorCode === 0) {
-        let state: any = this.state
-        state.fields = response.params
-        this.setState(state)
-      } else {
-        console.error('get fields failed')
-        electron.dialog.showErrorBox('错误', '内部通信不可恢复错误!');
-        process.exit(1)
+  private async init() {
+    await this.queryLock(async () => {
+      if (this.state.fields.length === 0) {
+        const response = await ipc.api('fields')
+        const response2 = await ipc.api('count')
+        if (response.errorCode === 0 && response2.errorCode === 0) {
+          this.count = response2.params
+          const state: any = this.state
+          state.pageCount = Math.ceil(this.count / state.limit);
+          state.fields = response.params
+          this.setState(state)
+        } else {
+          console.error('init failed')
+          electron.dialog.showErrorBox('错误', '内部通信不可恢复错误!');
+          process.exit(1)
+        }
       }
-    }
+    })
   }
 
   handleAddCondition() {
@@ -102,8 +117,19 @@ export class App extends React.Component<any, AppState>{
             admin={true}
             limit={this.state.limit}
             offset={this.state.offset}
+            pageCount={this.state.pageCount}
             startQuery={this.startQuery.bind(this)}
-            createNewOne={this.createNewOne.bind(this)}/>
+            createNewOne={this.createNewOne.bind(this)}
+            limitChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const state: any = this.state;
+              state.limit = Number(event.target.value);
+              this.setState(state)
+            }}
+            offsetChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const state: any = this.state;
+              state.offset = Number(event.target.value);
+              this.setState(state)
+            }}/>
         </div>
       </div>
     )

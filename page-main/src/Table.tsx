@@ -7,15 +7,14 @@ type TableProps = {
     admin: boolean,
     limit: number,
     offset: number,
+    pageCount: number,
     startQuery: () => void,
-    createNewOne: () => void
+    createNewOne: () => void,
+    limitChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    offsetChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 };
 
 export class Table extends React.Component<TableProps> {
-    constructor(props: TableProps) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
@@ -33,12 +32,34 @@ export class Table extends React.Component<TableProps> {
                         <span>
                             每页显示
                         </span>
-                        <input type="number" min="0" className="input-limit-and-offset"/>
+                        <input type="number" min="0" value={this.props.limit} onChange={this.props.limitChange} className="input-limit-and-offset"/>
+                        <span>
+                            条记录
+                        </span>
                         <button className="button-little">
-                            <img src="./first.png" />
+                            <img src="./refresh.png" alt="" />
                         </button>
                         <button className="button-little">
-                            <img src="./previous.png" />
+                            <img src="./first.png" alt="" />
+                        </button>
+                        <button className="button-little">
+                            <img src="./previous.png" alt="" />
+                        </button>
+                        <span>
+                            当前第
+                        </span>
+                        <input type="number" min="0" value={this.props.offset} onChange={this.props.offsetChange} className="input-limit-and-offset"/>
+                        <span>
+                            页/共{this.props.pageCount}页
+                        </span>
+                        <button className="button-little">
+                            <img src="./go.png" alt="" />
+                        </button>
+                        <button className="button-little">
+                            <img src="./next.png" alt="" />
+                        </button>
+                        <button className="button-little">
+                            <img src="./last.png" alt="" />
                         </button>
                     </div>
                 </div>
