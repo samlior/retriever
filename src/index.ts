@@ -5,8 +5,8 @@ import { api, setMainWindow } from './api';
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 850,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false

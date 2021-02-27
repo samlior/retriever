@@ -1,10 +1,70 @@
 .div-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.div-field-name-wrapper {
     background-color: rgb(29, 30, 32);
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
     border: none;
     margin: 15px;
     border-radius: 20px;
 
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+}
+
+.div-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+.button-field-name {
+    background-color: rgb(29, 30, 32);
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    margin-top: 15px;
+    align-self: flex-start;
+    min-width: 240px;
+    height: 100px;
+    font-weight: bold;
+    font-size: 23px;
+    color: white;
+}
+
+.button-field-name:hover
+{
+    background-color: rgb(54, 56, 59);
+}
+
+.button-field-name:active
+{
+    background-color: rgb(26,27,29);
+}
+
+.button-cancel {
+    outline: none;
+    border: none;
+    color: rgb(32, 33, 36);
+    background-color: rgb(80, 250, 123);
+    font-weight: bold;
+    width: 175px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 23px;
+}
+
+.button-cancel:hover
+{
+    background-color: rgb(5, 179, 48);
+}
+
+.button-cancel:active
+{
+    background-color: rgb(26,27,29);
+    color: white;
 }

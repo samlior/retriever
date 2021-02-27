@@ -48,7 +48,14 @@ export class App extends React.Component<any, AppState>{
   render() {
     return (
       <div className="div-main">
-
+        <div className="div-field-name-wrapper">
+          {this.state.fields.map((f) => <button className="button-field-name">{f.displayName}</button>)}
+        </div>
+        <div className="div-button-wrapper">
+          <button className="button-cancel" onClick={() => { window.close() }}>
+            取消
+          </button>
+        </div>
       </div>
     )
   }
