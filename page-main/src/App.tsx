@@ -197,6 +197,9 @@ export class App extends React.Component<any, AppState>{
         <div className="div-main">
           <div className="div-conditions">
             {this.conditions.map((c) => c.render())}
+            <button className="button-add-condition">
+              <img className="img-add-condition" src="./add.png" alt="" />
+            </button>
           </div>
           <Table
             fields={this.state.fields}

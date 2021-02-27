@@ -12,6 +12,45 @@
     flex-wrap: wrap;
 }
 
+.button-add-condition {
+    background-color: rgb(29, 30, 32);
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    margin-left: 15px;
+    margin-top: 15px;
+    align-self: flex-start;
+    min-width: 240px;
+    height: 210px;
+    position: relative;
+}
+
+.button-add-condition:hover
+{
+    background-color: rgb(54, 56, 59);
+}
+
+.button-add-condition:active
+{
+    background-color: rgb(26,27,29);
+}
+
+.img-add-condition {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+
 table {
     border: 1px solid #ccc;
     border-radius: 10px;
