@@ -8,5 +8,45 @@
         "displayName": "名字",
         "fieldName": "name",
         "type": "string"
+    },
+    {
+        "displayName": "f1",
+        "fieldName": "f1",
+        "type": "string"
+    },
+    {
+        "displayName": "f2",
+        "fieldName": "f2",
+        "type": "number"
+    },
+    {
+        "displayName": "f3",
+        "fieldName": "f3",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f4",
+        "fieldName": "f4",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f5",
+        "fieldName": "f5",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f6",
+        "fieldName": "f6",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f7",
+        "fieldName": "f7",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f8",
+        "fieldName": "f8",
+        "type": "string"
     }
 ]

@@ -121,7 +121,7 @@ export const api: {
         if (addConditionWindow === undefined) {
             addConditionWindow = new BrowserWindow({
                 width: 400,
-                height: 320,
+                height: 560,
                 parent: mainWindow,
                 modal: true,
                 frame: false,
