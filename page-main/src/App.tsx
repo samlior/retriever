@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
 import { ipc } from './ipc';
-import { Condition } from './Condition';
+import { NumberCondition } from './Condition';
 import { Table } from './Table';
-import { runInThisContext } from 'vm';
 
 declare let electron: any;
 
@@ -49,7 +48,7 @@ class AbstractCondition {
 
   makeOps() {
     const results: OpInfo[] = []
-    const ops = [['lt', this.lt]]
+    const ops = [['lt', this.lt], ['lte', this.lte], ['eq', this.eq], ['gte', this.gte], ['gt', this.gt], ['lk', this.lk], ['sw', this.sw], ['ew', this.ew]]
     for (const [opName, opValue] of ops) {
       if (opValue === '') {
         continue
@@ -60,10 +59,37 @@ class AbstractCondition {
   }
 
   render() {
-    return this.type === 'string' ? (
-      <Condition />
+    return this.type === 'number' ? (
+      <NumberCondition displayName="名字" valueChange={(type: string, value: string) => {
+          switch(type) {
+            case 'lt':
+                this.lt = value
+                break
+            case 'lte':
+                this.lte = value
+                break
+            case 'eq':
+                this.eq = value
+                break
+            case 'gte':
+                this.gte = value
+                break
+            case 'gt':
+                this.gt = value
+                break
+            case 'ew':
+                this.ew = value
+                break
+            case 'sw':
+                this.sw = value
+                break
+            case 'lk':
+                this.lk = value
+                break
+        }
+      }} />
     ) : (
-      <Condition />
+      <div></div>
     )
   }
 }
@@ -91,6 +117,7 @@ export class App extends React.Component<any, AppState>{
       pageCount: 0
     }
     this.init()
+    this.conditions = [new AbstractCondition('price', 'number')]
   }
 
   private async queryLock<T>(fn: () => Promise<T>) {
@@ -167,7 +194,7 @@ export class App extends React.Component<any, AppState>{
       <div className="div-app">
         <div className="div-main">
           <div className="div-conditions">
-            <Condition valueChange={this.handleConditionValueChange.bind(this)} addCondition={this.handleAddCondition.bind(this)} />
+            {this.conditions.map((c) => c.render())}
           </div>
           <Table
             fields={this.state.fields}

@@ -5,21 +5,51 @@
     padding: 15px;
     border-radius: 20px;
     border: none;
-    width: 250px;
-    height: 240px;
     margin-left: 15px;
     margin-top: 15px;
-    display: inline-block;
     align-self: flex-start;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.span-condition-display-name {
+    margin-left: 5px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.span-condition-line {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.div-condition-colunm-wrapper {
+    display: flex;
+    margin-top: 5px;
+}
+
+.div-condition-colunm,.div-condition-colunm-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.div-condition-colunm-2 {
+    margin-left: 10px;
+}
+
+.div-condition-span-wrapper {
+    margin-top: 5px;
+    height: 22px;
 }
 
 .input-condition {
     outline: none;
     border: none;
+    margin-top: 5px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     width: 35%;
     text-align: center;
-    margin-left: 5px;
     height: 20px;
 }
