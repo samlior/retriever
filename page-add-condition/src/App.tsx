@@ -1,26 +1,55 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { ipc } from './ipc';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+declare let electron: any;
+
+type AppState = {
+  fields: { fieldName: string, displayName: string }[]
 }
 
-export default App;
+export class App extends React.Component<any, AppState>{
+  private quering: boolean = false
+
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      fields: []
+    }
+    this.init()
+  }
+
+  private async queryLock<T>(fn: () => Promise<T>) {
+    if (this.quering) {
+      return
+    }
+    this.quering = true
+    await fn()
+    this.quering = false
+  }
+
+  private async init() {
+    await this.queryLock(async () => {
+      if (this.state.fields.length === 0) {
+        const response = await ipc.api('fields')
+        if (response.errorCode === 0) {
+          const state: any = this.state
+          state.fields = response.params
+          this.setState(state)
+        } else {
+          console.error('init failed')
+          electron.dialog.showErrorBox('错误', '内部通信不可恢复错误!');
+          process.exit(1)
+        }
+      }
+    })
+  }
+
+  render() {
+    return (
+      <div className="div-main">
+
+      </div>
+    )
+  }
+}

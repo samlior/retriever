@@ -1,0 +1,10 @@
+.div-main {
+    background-color: rgb(29, 30, 32);
+    padding: 15px;
+    border: none;
+    margin: 15px;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: flex-end;
+}

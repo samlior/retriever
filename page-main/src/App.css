@@ -50,26 +50,3 @@
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
 }
-
-table {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    border-spacing: 0;
-}
-
-td,
-th {
-    text-align: center;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
-
-td:last-child,
-th:last-child {
-    border-right: 0;
-}
-
-tr:last-child td,
-tr:last-child th {
-    border-bottom: 0;
-}
