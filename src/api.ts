@@ -115,6 +115,9 @@ function infoToOp(info: Info) {
 export const api: {
     [method: string]: (handle: { success: (params?: any) => void, failed: (params?: any) => void }, ...args: any[]) => any
 } = {
+    addCondition: () => {
+
+    },
     message: (handle, message: string) => {
         dialog.showMessageBox(mainWindow, { type: 'info', message, buttons: ['确定'] }).catch((err) => {
             console.error('api message err:', err);

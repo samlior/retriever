@@ -159,6 +159,10 @@ export class App extends React.Component<any, AppState>{
 
   }
 
+  addCondition() {
+
+  }
+
   private async init() {
     await this.queryLock(async () => {
       if (this.state.fields.length === 0) {
@@ -183,21 +187,13 @@ export class App extends React.Component<any, AppState>{
     })
   }
 
-  handleAddCondition() {
-
-  }
-
-  handleConditionValueChange(type: string, value: string) {
-    console.log('handleConditionValueChange, type:', type, 'value:', value)
-  }
-
   render() {
     return (
       <div className="div-app">
         <div className="div-main">
           <div className="div-conditions">
             {this.conditions.map((c) => c.render())}
-            <button className="button-add-condition">
+            <button className="button-add-condition" onClick={this.addCondition.bind(this)}>
               <img className="img-add-condition" src="./add.png" alt="" />
             </button>
           </div>
