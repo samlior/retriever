@@ -160,15 +160,17 @@ export class App extends React.Component<any, AppState>{
   }
 
   async addCondition() {
-    const response = await ipc.api('addCondition')
-    if (response.errorCode === 0) {
-      const { fieldName, displayName, type }: { fieldName: string, displayName: string, type: 'string' | 'number' } = response.params
-      const state = this.state
-      state.conditions.push(new AbstractCondition(fieldName, displayName, type))
-      this.setState(state)
-    } else {
-      console.error('addCondition failed')
-    }
+    await this.queryLock(async () => {
+      const response = await ipc.api('addCondition')
+      if (response.errorCode === 0) {
+        const { fieldName, displayName, type }: { fieldName: string, displayName: string, type: 'string' | 'number' } = response.params
+        const state = this.state
+        state.conditions.push(new AbstractCondition(fieldName, displayName, type))
+        this.setState(state)
+      } else {
+        console.error('addCondition failed')
+      }
+    })
   }
 
   private async init() {
