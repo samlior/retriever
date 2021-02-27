@@ -90,6 +90,7 @@ class AbstractCondition {
           this.lk = value
           break
     }
+    this.app.updateState()
   }
 
   deleteCondition() {
@@ -98,8 +99,8 @@ class AbstractCondition {
 
   render() {
     return this.type === 'number' ? 
-      <NumberCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} /> :
-      <StringCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} />
+      <NumberCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} lt={this.lt} lte={this.lte} eq={this.eq} gte={this.gte} gt={this.gt} lk={this.lk} sw={this.sw} ew={this.ew}/> :
+      <StringCondition displayName={this.displayName} valueChange={this.valueChange.bind(this)} deleteCondition={this.deleteCondition.bind(this)} lt={this.lt} lte={this.lte} eq={this.eq} gte={this.gte} gt={this.gt} lk={this.lk} sw={this.sw} ew={this.ew}/>
   }
 }
 
@@ -191,6 +192,10 @@ export class App extends React.Component<any, AppState>{
       state.conditions.splice(state.conditions.indexOf(condition), 1)
       this.setState(state)
     }
+  }
+
+  updateState() {
+    this.setState(this.state)
   }
 
   private async init() {
