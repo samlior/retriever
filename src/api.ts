@@ -2,8 +2,10 @@
 import { Sequelize, Model, DataTypes, Op } from 'sequelize';
 import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
+import path from 'path';
 
-let mainWindow: BrowserWindow
+let mainWindow!: BrowserWindow
+let addConditionWindow: BrowserWindow | undefined
 
 export function setMainWindow(window: BrowserWindow) {
     mainWindow = window
@@ -116,7 +118,23 @@ export const api: {
     [method: string]: (handle: { success: (params?: any) => void, failed: (params?: any) => void }, ...args: any[]) => any
 } = {
     addCondition: () => {
+        if (addConditionWindow === undefined) {
+            addConditionWindow = new BrowserWindow({
+                width: 400,
+                height: 320,
+                parent: mainWindow,
+                modal: true,
+                frame: false,
+                webPreferences: {
+                    nodeIntegration: true,
+                    webSecurity: false
+                }
+            });
 
+            addConditionWindow.on('close', () => { addConditionWindow = undefined })
+            addConditionWindow.loadFile(path.join(__dirname, '../page-add-condition/build/index.html'))
+            addConditionWindow.show()
+        }
     },
     message: (handle, message: string) => {
         dialog.showMessageBox(mainWindow, { type: 'info', message, buttons: ['确定'] }).catch((err) => {

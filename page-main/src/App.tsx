@@ -160,7 +160,7 @@ export class App extends React.Component<any, AppState>{
   }
 
   addCondition() {
-
+    ipc.apiSend('addCondition')
   }
 
   private async init() {
