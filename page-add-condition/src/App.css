@@ -4,35 +4,41 @@
 }
 
 .div-field-name-wrapper {
-    background-color: rgb(29, 30, 32);
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
     border: none;
-    margin: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
     border-radius: 20px;
+    height: 425px;
 
     display: flex;
     flex-direction: column;
+
+    overflow: auto;
 }
 
 .div-button-wrapper {
     display: flex;
     justify-content: flex-end;
-    padding: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
 }
 
 .button-field-name {
     background-color: rgb(29, 30, 32);
-    border-radius: 20px;
+    border-radius: 15px;
     outline: none;
     border: none;
     margin-top: 15px;
     align-self: flex-start;
+    width: 100%;
     min-width: 240px;
-    height: 100px;
+    height: 60px;
     font-weight: bold;
-    font-size: 23px;
+    font-size: 20px;
     color: white;
 }
 
@@ -52,10 +58,10 @@
     color: rgb(32, 33, 36);
     background-color: rgb(80, 250, 123);
     font-weight: bold;
-    width: 175px;
-    height: 50px;
-    border-radius: 20px;
-    font-size: 23px;
+    width: 120px;
+    height: 32px;
+    border-radius: 9px;
+    font-size: 17px;
 }
 
 .button-cancel:hover
@@ -67,4 +73,11 @@
 {
     background-color: rgb(26,27,29);
     color: white;
+}
+
+span {
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
 }
