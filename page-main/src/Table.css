@@ -166,3 +166,46 @@ span {
     font-size: 19px;
     margin-left: 5px;
 }
+
+.div-table-operator {
+    display: flex;
+    justify-content: center;
+}
+
+.button-operator-left,.button-operator-right  {
+    outline: none;
+    border: none;
+    color: rgb(32, 33, 36);
+    padding: 3px;
+    width: 22px;
+    height: 22px;
+    font-weight: bold;
+}
+
+.button-operator-left {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: rgb(80, 250, 123);
+}
+
+.button-operator-right {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(255, 106, 106);
+}
+
+.button-operator-left:hover
+{
+    background-color: rgb(5, 179, 48);
+}
+
+.button-operator-right:hover
+{
+    background-color: rgb(248, 47, 47);
+}
+
+.button-operator-left:active,.button-operator-right:active
+{
+    background-color: rgb(26,27,29);
+    color: white;
+}

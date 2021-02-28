@@ -66,9 +66,26 @@ export class Table extends React.Component<TableProps> {
                 <div className="div-table-wrapper">
                     <table>
                         <tr>
-                            {this.props.fields.map((f) => <th>{f.displayName}</th>)}
+                            {(() => {
+                                const fields = this.props.fields.map((f) => <th>{f.displayName}</th>)
+                                if (this.props.admin) {
+                                    fields.push(<th>操作</th>)
+                                }
+                                return fields
+                            })()}
                         </tr>
-                        {this.props.data.map((row) => <tr>{row.map((ele) => <td>{ele}</td>)}</tr>)}
+                        {this.props.data.map((row) => {
+                            const rows = row.map((ele) => <td>{ele}</td>)
+                            if (this.props.admin) {
+                                rows.push(<td>
+                                    <div className="div-table-operator">
+                                        <button className="button-operator-left">改</button>
+                                        <button className="button-operator-right">删</button>
+                                    </div>
+                                </td>)
+                            }
+                            return <tr>{rows}</tr>
+                        })}
                     </table>
                 </div>
             </div>
