@@ -48,5 +48,15 @@
         "displayName": "这是f8",
         "fieldName": "f8",
         "type": "string"
+    },
+    {
+        "displayName": "这是f9",
+        "fieldName": "f9",
+        "type": "string"
+    },
+    {
+        "displayName": "这是f10",
+        "fieldName": "f10",
+        "type": "string"
     }
 ]

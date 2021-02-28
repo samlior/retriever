@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-.div-field-name-wrapper {
+.div-field-wrapper {
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
@@ -15,8 +15,6 @@
     height: 425px;
 
     display: flex;
-    flex-direction: column;
-
     overflow: auto;
 }
 
@@ -52,9 +50,7 @@
 }
 
 span {
-    margin-left: 30px;
-    margin-top: 10px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -62,13 +58,24 @@ span {
     outline: none;
     border: none;
     border-radius: 5px;
-    width: 100%;
     margin-left: 5px;
     height: 30px;
     font-size: 20px;
     padding-left: 10px;
 }
 
-.div-span-and-input-wrapper {
+.div-span-column-wrapper, .div-input-column-wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.div-span-wrapper {
+    width: 73px;
+    min-height: 32px;
+}
+
+.div-span-wrapper, .div-input-wrapper {
+    height: 45px;
+    margin-top: 10px;
 }

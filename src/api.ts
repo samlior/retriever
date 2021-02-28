@@ -246,12 +246,8 @@ export const api: {
         }
     },
     updateRecordData: (handle) => {
-        if (updateRecordData !== undefined) {
-            handle.success(updateRecordData)
-            updateRecordData = undefined
-        } else {
-            handle.failed()
-        }
+        handle.success(updateRecordData === undefined ? [] : updateRecordData)
+        updateRecordData = undefined
     },
     update: async (handle, infos: Info[], id?: number) => {
         await init();
