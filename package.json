@@ -5,12 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && electron . --enable-logging",
-    "test": "node -r ts-node/register test/test.ts"
+    "test": "node -r ts-node/register test/test.ts",
+    "pack:win": "node ./pack.js win32",
+    "pack:darwin": "node ./pack.js darwin"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/samlior/retriever.git"
-  },
+  "repository": "git+https://github.com/samlior/retriever.git",
   "keywords": [
     "retriever"
   ],
@@ -21,19 +20,15 @@
   },
   "homepage": "https://github.com/samlior/retriever#readme",
   "dependencies": {
-    "electron": "^11.3.0",
     "sequelize": "^6.5.0",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@types/sequelize": "^4.28.9",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
-    "eslint": "^7.20.0",
-    "eslint-config-prettier": "^8.0.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1",
+    "electron": "^11.3.0",
+    "electron-packager": "^15.2.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
-  }
+  },
+  "private": true
 }
