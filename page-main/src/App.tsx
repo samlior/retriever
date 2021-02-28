@@ -198,7 +198,7 @@ export class App extends React.Component<any, AppState>{
   }
 
   async deleteRecord(id: number) {
-    if ((await ipc.api('confirm', '是否确定删除该记录?')).errorCode === 0) {
+    if ((await ipc.api('confirm', '是否确定删除该记录?')).params === true) {
       let success = false
       await this.queryLock(async () => {
         const response = await ipc.api('deleteRecord', id)
