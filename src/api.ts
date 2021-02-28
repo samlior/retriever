@@ -215,7 +215,7 @@ export const api: {
             if (updateRecordResolve === undefined) {
                 updateRecordWindow = new BrowserWindow({
                     width: 400,
-                    height: 560,
+                    height: 540,
                     parent: mainWindow,
                     modal: true,
                     frame: false,
