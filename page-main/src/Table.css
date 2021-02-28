@@ -70,7 +70,7 @@ tr:last-child th {
 
     display: flex;
     align-items: flex-end;
-    min-width: 910px;
+    min-width: 930px;
 }
 
 .div-table-wrapper {
@@ -89,7 +89,7 @@ tr:last-child th {
     flex-wrap: wrap;
 
     flex-grow: 1;
-    min-width: 910px;
+    min-width: 930px;
 }
 
 .div-table-header-front {

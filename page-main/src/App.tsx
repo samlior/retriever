@@ -113,8 +113,6 @@ type AppState = {
   conditions: AbstractCondition[]
 }
 
-let index = 0
-
 export class App extends React.Component<any, AppState>{
   private quering: boolean = false
   private count: number = 0
@@ -142,6 +140,9 @@ export class App extends React.Component<any, AppState>{
   }
 
   async startQuery(newOffset?: number) {
+    if (this.state.limit <= 0) {
+      return
+    }
     await this.queryLock(async () => {
       let ops: OpInfo[] = []
       for (const condition of this.state.conditions) {
@@ -153,11 +154,12 @@ export class App extends React.Component<any, AppState>{
         if (newOffset !== undefined) {
           state.offset = newOffset
         }
+        this.count = response.params.count
         state.pageCount = Math.ceil(this.count / state.limit) - 1
         if (state.pageCount < 0) {
           state.pageCount = 0
         }
-        state.data = objsToData(response.params, state)
+        state.data = objsToData(response.params.rows, state)
         this.setState(state)
       } else {
         ipc.apiSend('message', '查询失败')
@@ -171,7 +173,6 @@ export class App extends React.Component<any, AppState>{
 
   async addCondition() {
     await this.queryLock(async () => {
-      let i = index++
       const response = await ipc.api('addCondition')
       if (response.errorCode === 0) {
         if (response.params !== undefined) {
@@ -202,14 +203,8 @@ export class App extends React.Component<any, AppState>{
     await this.queryLock(async () => {
       if (this.state.fields.length === 0) {
         const response = await ipc.api('fields')
-        const response2 = await ipc.api('count')
-        if (response.errorCode === 0 && response2.errorCode === 0) {
-          this.count = response2.params
+        if (response.errorCode === 0) {
           const state: any = this.state
-          state.pageCount = Math.ceil(this.count / state.limit) - 1
-          if (state.pageCount < 0) {
-            state.pageCount = 0
-          }
           state.fields = response.params
           state.data = objsToData([], state)
           this.setState(state)
@@ -220,6 +215,7 @@ export class App extends React.Component<any, AppState>{
         }
       }
     })
+    await this.startQuery()
   }
 
   render() {

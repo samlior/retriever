@@ -181,20 +181,10 @@ export const api: {
     fields: (handle) => {
         handle.success(fields);
     },
-    count: async (handle) => {
-        await init();
-        try {
-            handle.success(await Data.count());
-        }
-        catch(err) {
-            console.error('api count err:', err);
-            handle.failed();
-        }
-    },
     query: async (handle, infos: Info[], limit: number, offset: number) => {
         await init();
         try {
-            const datas = await Data.findAll({
+            const { rows, count } = await Data.findAndCountAll({
                 where: {
                     [Op.and]: infos.map(infoToOp)
                 },
@@ -202,7 +192,10 @@ export const api: {
                 limit,
                 offset
             });
-            handle.success(datas.map((d) => d.toJSON()));
+            handle.success({
+                rows: rows.map((r) => r.toJSON()),
+                count
+            });
         }
         catch(err) {
             console.error('api query err:', err);

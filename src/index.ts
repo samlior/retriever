@@ -5,7 +5,7 @@ import { api, setMainWindow } from './api';
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 1000,
+    width: 1100,
     height: 850,
     webPreferences: {
       nodeIntegration: true,
