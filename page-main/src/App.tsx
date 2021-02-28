@@ -167,8 +167,19 @@ export class App extends React.Component<any, AppState>{
     })
   }
 
-  createNewOne() {
-
+  async createNewOne() {
+    let success = false
+    await this.queryLock(async () => {
+      const response = await ipc.api('updateRecord')
+      if (response.errorCode === 0) {
+        success = response.params
+      } else {
+        ipc.apiSend('message', '新增失败')
+      }
+    })
+    if (success) {
+      await this.startQuery()
+    }
   }
 
   async updateRecord(data: any[]) {
