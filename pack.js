@@ -12,11 +12,13 @@ async function main() {
     let platform = 'win32'
     let arch = 'x64'
     let out = 'out-win'
+    let icon = './icon/icon.ico'
     
     if (process.argv[2] === 'darwin') {
         platform = 'darwin'
         arch = 'x64'
         out = 'out-darwin'
+        icon = './icon/icon.icns'
     }
 
     await bundleElectronApp({
@@ -24,6 +26,7 @@ async function main() {
         appVersion: settings.version,
         arch: arch,
         asar: false,
+        icon,
         ignore: (fileName)=>{
             if (fileName === '') {
                 return false
