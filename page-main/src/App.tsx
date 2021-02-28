@@ -171,6 +171,21 @@ export class App extends React.Component<any, AppState>{
 
   }
 
+  async updateRecord(data: any[]) {
+    let success = false
+    await this.queryLock(async () => {
+      const response = await ipc.api('updateRecord', data)
+      if (response.errorCode === 0) {
+        success = response.params
+      } else {
+        ipc.apiSend('message', '更新失败')
+      }
+    })
+    if (success) {
+      await this.startQuery()
+    }
+  }
+
   async addCondition() {
     await this.queryLock(async () => {
       const response = await ipc.api('addCondition')
@@ -237,6 +252,7 @@ export class App extends React.Component<any, AppState>{
             pageCount={this.state.pageCount}
             startQuery={this.startQuery.bind(this)}
             createNewOne={this.createNewOne.bind(this)}
+            updateRecord={this.updateRecord.bind(this)}
             limitChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const state: any = this.state
               state.limit = Number(event.target.value)

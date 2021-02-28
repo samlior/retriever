@@ -6,7 +6,10 @@ import path from 'path';
 
 let mainWindow!: BrowserWindow
 let addConditionWindow: BrowserWindow | undefined
+let updateRecordWindow: BrowserWindow | undefined
 let addConditionResolve: ((result?: string) => void) | undefined;
+let updateRecordResolve: ((result: boolean) => void) | undefined;
+let updateRecordData: string[] | undefined
 
 export function setMainWindow(window: BrowserWindow) {
     mainWindow = window
@@ -200,6 +203,54 @@ export const api: {
         catch(err) {
             console.error('api query err:', err);
             handle.failed();
+        }
+    },
+    updateRecord: async (handle, data: string[]) => {
+        if (updateRecordResolve) {
+            handle.failed();
+            return
+        }
+        try {
+            updateRecordData = data
+            if (updateRecordResolve === undefined) {
+                updateRecordWindow = new BrowserWindow({
+                    width: 400,
+                    height: 560,
+                    parent: mainWindow,
+                    modal: true,
+                    frame: false,
+                    webPreferences: {
+                        nodeIntegration: true,
+                        webSecurity: false
+                    }
+                });
+
+                updateRecordWindow.on('close', () => { updateRecordWindow = undefined })
+                updateRecordWindow.loadFile(path.join(__dirname, '../page-update/build/index.html'))
+                updateRecordWindow.show()
+            }
+            const result = await new Promise<boolean>((resolve) => {
+                updateRecordResolve = resolve
+            })
+            handle.success(result)
+        }
+        catch(err) {
+            console.error('api addCondition err:', err);
+            handle.failed();
+        }
+    },
+    updateRecordResult: (handle, result: boolean) => {
+        if (updateRecordResolve) {
+            updateRecordResolve(result)
+            updateRecordResolve = undefined
+        }
+    },
+    updateRecordData: (handle) => {
+        if (updateRecordData !== undefined) {
+            handle.success(updateRecordData)
+            updateRecordData = undefined
+        } else {
+            handle.failed()
         }
     },
     update: async (handle, infos: Info[], id?: number) => {

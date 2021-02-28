@@ -11,7 +11,8 @@ type TableProps = {
     startQuery: (newOffset?: number) => void,
     createNewOne: () => void,
     limitChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    offsetChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    offsetChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    updateRecord: (data: any[]) => void
 };
 
 export class Table extends React.Component<TableProps> {
@@ -79,7 +80,7 @@ export class Table extends React.Component<TableProps> {
                             if (this.props.admin) {
                                 rows.push(<td>
                                     <div className="div-table-operator">
-                                        <button className="button-operator-left">改</button>
+                                        <button className="button-operator-left" onClick={() => { this.props.updateRecord(row.map((d) => d === '-' ? '' : d)) }}>改</button>
                                         <button className="button-operator-right">删</button>
                                     </div>
                                 </td>)
