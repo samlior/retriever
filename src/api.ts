@@ -3,6 +3,7 @@ import { Sequelize, Model, DataTypes, Op } from 'sequelize';
 import { BrowserWindow, dialog } from 'electron';
 import fs from 'fs';
 import path from 'path';
+import os from 'os'
 
 let mainWindow!: BrowserWindow
 let addConditionWindow: BrowserWindow | undefined
@@ -24,7 +25,7 @@ type Fields = {
 let admin: boolean = false
 let fields: Fields
 try {
-    const fieldsJSON = JSON.parse(fs.readFileSync('./fields.json').toString())
+    const fieldsJSON = JSON.parse(fs.readFileSync(os.platform() === 'win32' ? './fields.json' : path.join(os.homedir(), '.retriever/fields.json')).toString())
     admin = !!fieldsJSON.admin
     fields = [{
         displayName: 'id',
@@ -56,7 +57,7 @@ for (const field of fields) {
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './db/database.sqlite'
+    storage: os.platform() === 'win32' ? './db/database.sqlite' : path.join(os.homedir(), '.retriever/db/database.sqlite')
 });
   
 class Data extends Model {}
