@@ -12,7 +12,8 @@ type TableProps = {
     createNewOne: () => void,
     limitChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     offsetChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    updateRecord: (data: any[]) => void
+    updateRecord: (data: any[]) => void,
+    deleteRecord: (id: number) => void
 };
 
 export class Table extends React.Component<TableProps> {
@@ -81,7 +82,7 @@ export class Table extends React.Component<TableProps> {
                                 rows.push(<td>
                                     <div className="div-table-operator">
                                         <button className="button-operator-left" onClick={() => { this.props.updateRecord(row.map((d) => d === '-' ? '' : d)) }}>改</button>
-                                        <button className="button-operator-right">删</button>
+                                        <button className="button-operator-right" onClick={() => { this.props.deleteRecord(typeof row[0] === 'number' ? row[0] : Number(row[0])) }}>删</button>
                                     </div>
                                 </td>)
                             }

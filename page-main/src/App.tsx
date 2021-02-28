@@ -197,6 +197,23 @@ export class App extends React.Component<any, AppState>{
     }
   }
 
+  async deleteRecord(id: number) {
+    if ((await ipc.api('confirm', '是否确定删除该记录?')).errorCode === 0) {
+      let success = false
+      await this.queryLock(async () => {
+        const response = await ipc.api('deleteRecord', id)
+        if (response.errorCode === 0) {
+          success = true
+        } else {
+          ipc.apiSend('message', '删除失败')
+        }
+      })
+      if (success) {
+        await this.startQuery()
+      }
+    }
+  }
+
   async addCondition() {
     await this.queryLock(async () => {
       const response = await ipc.api('addCondition')
@@ -264,6 +281,7 @@ export class App extends React.Component<any, AppState>{
             startQuery={this.startQuery.bind(this)}
             createNewOne={this.createNewOne.bind(this)}
             updateRecord={this.updateRecord.bind(this)}
+            deleteRecord={this.deleteRecord.bind(this)}
             limitChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const state: any = this.state
               state.limit = Number(event.target.value)

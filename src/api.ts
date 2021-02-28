@@ -277,5 +277,21 @@ export const api: {
             console.error('api update err:', err);
             handle.failed();
         }
+    },
+    deleteRecord: async (handle, id: number) => {
+        await init()
+        try {
+            const data = await Data.findByPk(id);
+            if (!data) {
+                dialog.showErrorBox('错误', '数据丢失')
+                process.exit(1)
+            }
+            await data.destroy();
+            handle.success();
+        }
+        catch(err) {
+            console.error('api deleteRecord err:', err);
+            handle.failed();
+        }
     }
 };
