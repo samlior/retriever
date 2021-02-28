@@ -251,13 +251,16 @@ export const api: {
     },
     update: async (handle, infos: Info[], id?: number) => {
         await init();
+        console.log('-'.repeat(10), 'infos', infos)
+        console.log('-'.repeat(10), 'id', id)
         try {
             const installProperties = (data: any) => {
                 for (const info of infos) {
                     data[info.field] = info.value;
                 }
             }
-            if (id) {
+            if (id !== undefined) {
+                console.log('-'.repeat(10), 'enter update')
                 const data = await Data.findByPk(id);
                 if (!data) {
                     dialog.showErrorBox('错误', '数据丢失')
@@ -267,6 +270,7 @@ export const api: {
                 await data.save();
             }
             else {
+                console.log('-'.repeat(10), 'enter insert')
                 const data: any = {}
                 installProperties(data);
                 await Data.create(data)

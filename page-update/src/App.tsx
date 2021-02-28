@@ -5,9 +5,9 @@ import { ipc } from './ipc';
 declare let electron: any;
 
 type AppState = {
-  fields: { fieldName: string, displayName: string }[],
+  fields: { fieldName: string, displayName: string, type: string }[],
   data: any[],
-  id: string
+  id: number
 }
 
 export class App extends React.Component<any, AppState>{
@@ -18,7 +18,7 @@ export class App extends React.Component<any, AppState>{
     this.state = {
       fields: [],
       data: [],
-      id: ''
+      id: -1
     }
     this.init()
   }
@@ -42,7 +42,7 @@ export class App extends React.Component<any, AppState>{
           state.fields = response.params
           if (responseData.params.length > 0) {
             const id = responseData.params[0]
-            state.id = typeof id === 'string' ? id : `${id}`
+            state.id = typeof id === 'string' ? Number(id) : id
           }
           if (responseData.params.length > 1) {
             state.data = responseData.params.slice(1)
@@ -79,13 +79,43 @@ export class App extends React.Component<any, AppState>{
               this.state.fields.slice(1).map((f, i) => {
                 return (
                   <div className="div-input-wrapper">
-                    <input type="text" className="input-field-value" value={this.state.data[i]}/>
+                    <input type="text" className="input-field-value" value={this.state.data[i]} onChange={(event) => {
+                      const state = this.state
+                      state.data[i] = event.target.value
+                      this.setState(state)
+                    }}/>
                   </div>
               )})
             }
           </div>
         </div>
         <div className="div-button-wrapper">
+          <button className="button-cancel" onClick={async () => {
+              const fields = this.state.fields.slice(1)
+              for (let i = 0; i < fields.length; i++) {
+                const { displayName, type } = fields[i]
+                const value = this.state.data[i]
+                if (value !== '' && type === 'number' && isNaN(Number(value))) {
+                  ipc.apiSend('message', `非法的数据格式"${displayName}"请修改`)
+                  return
+                }
+              }
+              ipc.apiSend('updateRecordResult',
+                (await ipc.api(
+                  'update',
+                  this.state.fields.slice(1).map(({ fieldName, type }, i) => {
+                    const value = this.state.data[i]
+                    return {
+                      field: fieldName,
+                      value: value === '' ? null : value
+                    }
+                  }),
+                  this.state.id === -1 ? undefined : this.state.id
+                )).errorCode === 0);
+              window.close()
+            }}>
+            确定
+          </button>
           <button className="button-cancel" onClick={() => { ipc.apiSend('updateRecordResult', false); window.close() }}>
             取消
           </button>
