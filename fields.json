@@ -1,62 +1,42 @@
 [
     {
+        "displayName": "名称",
+        "fieldName": "name",
+        "type": "string"
+    },
+	{
         "displayName": "价格",
         "fieldName": "price",
         "type": "number"
     },
     {
-        "displayName": "名字",
-        "fieldName": "name",
+        "displayName": "厂商",
+        "fieldName": "manufacturer",
         "type": "string"
     },
     {
-        "displayName": "f1",
-        "fieldName": "f1",
+        "displayName": "代工厂商",
+        "fieldName": "OEM",
         "type": "string"
     },
     {
-        "displayName": "f2",
-        "fieldName": "f2",
+        "displayName": "功率(W)",
+        "fieldName": "power",
         "type": "number"
     },
     {
-        "displayName": "f3",
-        "fieldName": "f3",
-        "type": "string"
+        "displayName": "显存(G)",
+        "fieldName": "videoMemory",
+        "type": "number"
     },
     {
-        "displayName": "这是f4",
-        "fieldName": "f4",
-        "type": "string"
+        "displayName": "核心频率(Hz)",
+        "fieldName": "coreFrequency",
+        "type": "number"
     },
     {
-        "displayName": "这是f5",
-        "fieldName": "f5",
-        "type": "string"
-    },
-    {
-        "displayName": "这是f6",
-        "fieldName": "f6",
-        "type": "string"
-    },
-    {
-        "displayName": "这是f7",
-        "fieldName": "f7",
-        "type": "string"
-    },
-    {
-        "displayName": "这是f8",
-        "fieldName": "f8",
-        "type": "string"
-    },
-    {
-        "displayName": "这是f9",
-        "fieldName": "f9",
-        "type": "string"
-    },
-    {
-        "displayName": "这是f10",
-        "fieldName": "f10",
+        "displayName": "描述",
+        "fieldName": "description",
         "type": "string"
     }
 ]
