@@ -30,7 +30,7 @@
     flex-grow: 1;
 }
 
-.img-delete {
+.img-delete, .img-delete-hover, .img-delete-active {
     width: 22px;
     height: 22px;
     position: absolute;
@@ -44,6 +44,14 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
+}
+
+.img-delete:hover {
+    display: none;
+}
+
+.img-delete:active, .img-delete-hover:active {
+    display: none;
 }
 
 .button-delete {

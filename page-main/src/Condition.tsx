@@ -29,6 +29,8 @@ export class NumberCondition extends React.Component<ConditionProps>{
                     <span className="span-condition-display-name">{this.props.displayName}:</span>
                     <div className="div-condition-delete-wrapper">
                         <button className="button-delete" onClick={this.props.deleteCondition}>
+                            <img className="img-delete-active" src="./delete-active.png" alt="" />
+                            <img className="img-delete-hover" src="./delete-hover.png" alt="" />
                             <img className="img-delete" src="./delete.png" alt="" />
                         </button>
                     </div>
@@ -93,6 +95,8 @@ export class StringCondition extends React.Component<ConditionProps>{
                     <span className="span-condition-display-name">{this.props.displayName}:</span>
                     <div className="div-condition-delete-wrapper">
                         <button className="button-delete" onClick={this.props.deleteCondition}>
+                            <img className="img-delete-active" src="./delete-active.png" alt="" />
+                            <img className="img-delete-hover" src="./delete-hover.png" alt="" />
                             <img className="img-delete" src="./delete.png" alt="" />
                         </button>
                     </div>
