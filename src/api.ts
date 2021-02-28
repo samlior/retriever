@@ -21,13 +21,16 @@ type Fields = {
     type: string,
 }[];
 
+let admin: boolean = false
 let fields: Fields
 try {
+    const fieldsJSON = JSON.parse(fs.readFileSync('./fields.json').toString())
+    admin = !!fieldsJSON.admin
     fields = [{
         displayName: 'id',
         fieldName: 'id',
         type: 'number'
-    }].concat(JSON.parse(fs.readFileSync('./fields.json').toString()))
+    }].concat(fieldsJSON.fields)
 }
 catch(err) {
     console.error('read fields.json faild, error:', err);
@@ -182,7 +185,7 @@ export const api: {
         }
     },
     fields: (handle) => {
-        handle.success(fields);
+        handle.success({ admin, fields });
     },
     query: async (handle, infos: Info[], limit: number, offset: number) => {
         await init();

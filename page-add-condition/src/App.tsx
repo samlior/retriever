@@ -34,7 +34,7 @@ export class App extends React.Component<any, AppState>{
         const response = await ipc.api('fields')
         if (response.errorCode === 0) {
           const state: any = this.state
-          state.fields = response.params
+          state.fields = response.params.fields
           this.setState(state)
         } else {
           console.error('init failed')

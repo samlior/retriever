@@ -110,7 +110,8 @@ type AppState = {
   limit: number,
   offset: number,
   pageCount: number,
-  conditions: AbstractCondition[]
+  conditions: AbstractCondition[],
+  admin: boolean
 }
 
 export class App extends React.Component<any, AppState>{
@@ -125,7 +126,8 @@ export class App extends React.Component<any, AppState>{
       limit: 10,
       offset: 0,
       pageCount: 0,
-      conditions: []
+      conditions: [],
+      admin: false
     }
     this.init()
   }
@@ -248,7 +250,8 @@ export class App extends React.Component<any, AppState>{
         const response = await ipc.api('fields')
         if (response.errorCode === 0) {
           const state: any = this.state
-          state.fields = response.params
+          state.admin = response.params.admin
+          state.fields = response.params.fields
           state.data = objsToData([], state)
           this.setState(state)
         } else {
@@ -274,7 +277,7 @@ export class App extends React.Component<any, AppState>{
           <Table
             fields={this.state.fields}
             data={this.state.data}
-            admin={true}
+            admin={this.state.admin}
             limit={this.state.limit}
             offset={this.state.offset}
             pageCount={this.state.pageCount}

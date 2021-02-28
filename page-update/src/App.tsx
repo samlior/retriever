@@ -39,7 +39,7 @@ export class App extends React.Component<any, AppState>{
         const responseData: { errorCode: 0 | 1, params: string[] } = await ipc.api('updateRecordData')
         if (response.errorCode === 0 && responseData.errorCode === 0) {
           const state: any = this.state
-          state.fields = response.params
+          state.fields = response.params.fields
           if (responseData.params.length > 0) {
             const id = responseData.params[0]
             state.id = typeof id === 'string' ? Number(id) : id
