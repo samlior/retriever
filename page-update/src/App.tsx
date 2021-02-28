@@ -90,7 +90,7 @@ export class App extends React.Component<any, AppState>{
           </div>
         </div>
         <div className="div-button-wrapper">
-          <button className="button-cancel" onClick={async () => {
+          <button className="button-confirm" onClick={async () => {
               const fields = this.state.fields.slice(1)
               for (let i = 0; i < fields.length; i++) {
                 const { displayName, type } = fields[i]

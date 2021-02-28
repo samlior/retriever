@@ -26,7 +26,7 @@
     padding-top: 15px;
 }
 
-.button-cancel {
+.button-cancel, .button-confirm {
     outline: none;
     border: none;
     color: rgb(32, 33, 36);
@@ -38,15 +38,17 @@
     font-size: 17px;
 }
 
-.button-cancel:hover
-{
+.button-cancel:hover, .button-confirm:hover {
     background-color: rgb(5, 179, 48);
 }
 
-.button-cancel:active
-{
+.button-cancel:active, .button-confirm:active {
     background-color: rgb(26,27,29);
     color: white;
+}
+
+.button-confirm {
+    margin-right: 10px;
 }
 
 span {
